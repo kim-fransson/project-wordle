@@ -2,7 +2,7 @@ import React from "react";
 
 import { sample } from "../../utils";
 import { WORDS } from "../../data";
-import GuessForm from "../GuessForm/GuessForm";
+import GuessForm from "../GuessForm";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
