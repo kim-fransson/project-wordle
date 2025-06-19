@@ -176,6 +176,20 @@ h1 {
   will-change: transform;
 }
 
+.banner header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: white;
+  color: black;
+  border: 2px solid black;
+  height: auto;
+}
+
+.banner header button {
+  padding: 4px;
+}
+
 .happy.banner {
   background: var(--color-success);
   color: white;

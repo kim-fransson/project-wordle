@@ -1,8 +1,8 @@
 import Banner from "../Banner";
 
-function WonBanner({ numOfGuesses }) {
+function WonBanner({ numOfGuesses, handleRestartGame }) {
   return (
-    <Banner status="happy">
+    <Banner status="happy" handleRestartGame={handleRestartGame}>
       <p>
         <strong>Congratulations!</strong> Got it in{" "}
         <strong>
