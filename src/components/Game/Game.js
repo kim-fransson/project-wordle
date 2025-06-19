@@ -7,6 +7,8 @@ import GuessResults from "../GuessResults";
 import { GameStatus, NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import WonBanner from "../WonBanner";
 import LostBanner from "../LostBanner";
+import Keyboard from "../Keyboard";
+import { checkGuess } from "../../game-helpers";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -14,30 +16,37 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const [guesses, setGuesses] = React.useState([]);
+  const [validatedGuesses, setValidatedGuess] = React.useState([]);
   const [status, setStatus] = React.useState(GameStatus.RUNNING);
 
   function handleSubmitGuess(tentativeGuess) {
-    const nextGuess = { id: crypto.randomUUID(), value: tentativeGuess };
-    const nextGuesses = [...guesses, nextGuess];
+    const validatedGuess = checkGuess(tentativeGuess, answer);
+    const nextValidatedGuess = {
+      id: crypto.randomUUID(),
+      value: validatedGuess,
+    };
+    const nextValidatedGuesses = [...validatedGuesses, nextValidatedGuess];
 
     if (tentativeGuess === answer) {
       setStatus(GameStatus.WON);
-    } else if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+    } else if (nextValidatedGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
       setStatus(GameStatus.LOST);
     }
 
-    setGuesses(nextGuesses);
+    setValidatedGuess(nextValidatedGuesses);
   }
 
   return (
     <>
-      <GuessResults guesses={guesses} answer={answer} />
+      <GuessResults validatedGuesses={validatedGuesses} answer={answer} />
       <GuessForm
         handleSubmitGuess={handleSubmitGuess}
         disabled={status !== GameStatus.RUNNING}
       />
-      {status === GameStatus.WON && <WonBanner numOfGuesses={guesses.length} />}
+      <Keyboard validatedGuesses={validatedGuesses} />
+      {status === GameStatus.WON && (
+        <WonBanner numOfGuesses={validatedGuesses.length} />
+      )}
       {status === GameStatus.LOST && <LostBanner answer={answer} />}
     </>
   );

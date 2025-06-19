@@ -1,5 +1,4 @@
 import { WORD_LENGTH } from "../../constants";
-import { checkGuess } from "../../game-helpers";
 import { range } from "../../utils";
 
 function Cell({ letter, status }) {
@@ -7,16 +6,14 @@ function Cell({ letter, status }) {
   return <span className={className}>{letter}</span>;
 }
 
-function Guess({ value, answer }) {
-  const result = checkGuess(value, answer);
-
+function Guess({ validatedGuess }) {
   return (
     <p className="guess">
       {range(WORD_LENGTH).map((index) => (
         <Cell
           key={index}
-          letter={result ? result[index].letter : undefined}
-          status={result ? result[index].status : undefined}
+          letter={validatedGuess ? validatedGuess[index].letter : undefined}
+          status={validatedGuess ? validatedGuess[index].status : undefined}
         />
       ))}
     </p>
