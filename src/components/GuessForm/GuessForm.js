@@ -1,7 +1,7 @@
 import React from "react";
 import { WORD_LENGTH } from "../../constants";
 
-function GuessForm({ handleSubmitGuess }) {
+function GuessForm({ handleSubmitGuess, disabled }) {
   const [tentativeGuess, setTentativeGuess] = React.useState("");
 
   function handleSubmit(event) {
@@ -27,6 +27,7 @@ function GuessForm({ handleSubmitGuess }) {
         pattern={`[a-zA-Z]{${WORD_LENGTH}}`}
         title={`${WORD_LENGTH} letter word`}
         value={tentativeGuess}
+        disabled={disabled}
         onChange={handleGuessChange}
       />
     </form>
